@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -eu -o pipefail
+
+main() {
+	local parentBranch="${1:-master}"
+
+	# Get latest changes on parent branch
+	git checkout ${parentBranch}
+	git pull --prune
+
+	# Rebase working branch changes onto parent branch
+	git checkout -
+	git rebase ${parentBranch}
+}
+
+main "$@"
